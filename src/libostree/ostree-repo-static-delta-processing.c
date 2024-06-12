@@ -423,8 +423,9 @@ dispatch_bspatch (OstreeRepo *repo, StaticDeltaExecutionState *state, GCancellab
       struct bspatch_stream stream;
       stream.read = bspatch_read;
       stream.opaque = &opaque;
-      if (bspatch ((const guint8 *)g_mapped_file_get_contents (input_mfile),
-                   g_mapped_file_get_length (input_mfile), buf, state->content_size, &stream)
+      g_autofree guint8 *old = (guint8 *)g_mapped_file_get_contents (input_mfile);
+      if (bspatch (old, g_mapped_file_get_length (input_mfile), buf,
+                   state->content_size, &stream)
           < 0)
         return glnx_throw (error, "bsdiff patch failed");
 
