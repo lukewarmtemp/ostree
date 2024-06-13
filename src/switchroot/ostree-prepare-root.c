@@ -537,6 +537,7 @@ main (int argc, char *argv[])
                                                 &etc_transient, &error))
         errx (EXIT_FAILURE, "Failed to parse etc.transient value: %s", error->message);
 
+      static const char *tmp_sysroot_etc = TMP_SYSROOT "/etc";
       if (etc_transient)
         {
           char *ovldir = "/run/ostree/transient-etc";
@@ -570,9 +571,10 @@ main (int argc, char *argv[])
       else
         {
           /* Bind-mount /etc (at deploy path), and remount as writable. */
-          if (mount ("etc", TMP_SYSROOT "/etc", NULL, MS_BIND | MS_SILENT, NULL) < 0)
+          static const char *tmp_sysroot_etc = TMP_SYSROOT "/etc";
+          if (mount ("etc", tmp_sysroot_etc, NULL, MS_BIND | MS_SILENT, NULL) < 0)
             err (EXIT_FAILURE, "failed to prepare /etc bind-mount at /sysroot.tmp/etc");
-          if (mount (TMP_SYSROOT "/etc", TMP_SYSROOT "/etc", NULL, MS_BIND | MS_REMOUNT | MS_SILENT,
+          if (mount (tmp_sysroot_etc, tmp_sysroot_etc, NULL, MS_BIND | MS_REMOUNT | MS_SILENT,
                      NULL)
               < 0)
             err (EXIT_FAILURE, "failed to make writable /etc bind-mount at /sysroot.tmp/etc");
