@@ -396,7 +396,7 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
                                                          OstreeSign *sign, gboolean skip_validation,
                                                          GCancellable *cancellable, GError **error)
 {
-  printf("ENTER static-delta");
+  printf("ENTER static-delta\n");
   g_autofree char *basename = NULL;
   g_autoptr (GVariant) meta = NULL;
 
@@ -406,10 +406,13 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
   glnx_autofd int dfd = glnx_opendirat_with_errno (AT_FDCWD, dir_or_file_path, TRUE);
   if (dfd < 0)
     {
+      printf("ENTER stage 1\n");
       if (errno != ENOTDIR)
+        printf("ENTER stage 1.1\n");
         return glnx_throw_errno_prefix (error, "openat(O_DIRECTORY)");
       else
         {
+        printf("ENTER stage 1.2\n");
           // char ch = '.';
           // if (dir_or_file_path[strlen(dir_or_file_path) - 1] == G_DIR_SEPARATOR)
           //   strncat(dir_or_file_path, &ch, 1);
@@ -422,9 +425,10 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
         }
     }
   else
+    printf("ENTER stage 1.3\n");
     basename = g_strdup ("superblock");
 
-  printf("Pass changes");
+  printf("Pass changes\n");
 
   glnx_autofd int meta_fd = openat (dfd, basename, O_RDONLY | O_CLOEXEC);
   if (meta_fd < 0)
