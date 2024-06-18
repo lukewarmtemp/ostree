@@ -396,6 +396,7 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
                                                          OstreeSign *sign, gboolean skip_validation,
                                                          GCancellable *cancellable, GError **error)
 {
+  printf("ENTER static-delta");
   g_autofree char *basename = NULL;
   g_autoptr (GVariant) meta = NULL;
 
@@ -422,6 +423,8 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
     }
   else
     basename = g_strdup ("superblock");
+
+  printf("Pass changes");
 
   glnx_autofd int meta_fd = openat (dfd, basename, O_RDONLY | O_CLOEXEC);
   if (meta_fd < 0)
