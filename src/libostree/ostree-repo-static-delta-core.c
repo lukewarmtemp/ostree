@@ -408,21 +408,23 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
     {
       printf ("ENTER stage 1\n");
       if (errno != ENOTDIR)
-        printf ("ENTER stage 1.1\n");
-      return glnx_throw_errno_prefix (error, "openat(O_DIRECTORY)");
+        {
+          printf ("ENTER stage 1.1\n");
+          return glnx_throw_errno_prefix (error, "openat(O_DIRECTORY)");
+        }
       else
-      {
-        printf ("ENTER stage 1.2\n");
-        // char ch = '.';
-        // if (dir_or_file_path[strlen(dir_or_file_path) - 1] == G_DIR_SEPARATOR)
-        //   strncat(dir_or_file_path, &ch, 1);
-        printf ("HELLO");
-        g_autofree char *dir = g_path_get_dirname (dir_or_file_path);
-        basename = g_path_get_basename (dir_or_file_path);
+        {
+          printf ("ENTER stage 1.2\n");
+          // char ch = '.';
+          // if (dir_or_file_path[strlen(dir_or_file_path) - 1] == G_DIR_SEPARATOR)
+          //   strncat(dir_or_file_path, &ch, 1);
+          printf ("HELLO");
+          g_autofree char *dir = g_path_get_dirname (dir_or_file_path);
+          basename = g_path_get_basename (dir_or_file_path);
 
-        if (!glnx_opendirat (AT_FDCWD, dir, TRUE, &dfd, error))
-          return FALSE;
-      }
+          if (!glnx_opendirat (AT_FDCWD, dir, TRUE, &dfd, error))
+            return FALSE;
+        }
     }
   else
     {
