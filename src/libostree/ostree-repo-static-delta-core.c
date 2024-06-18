@@ -412,7 +412,7 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
         return glnx_throw_errno_prefix (error, "openat(O_DIRECTORY)");
       else
         {
-        printf("ENTER stage 1.2\n");
+          printf("ENTER stage 1.2\n");
           // char ch = '.';
           // if (dir_or_file_path[strlen(dir_or_file_path) - 1] == G_DIR_SEPARATOR)
           //   strncat(dir_or_file_path, &ch, 1);
