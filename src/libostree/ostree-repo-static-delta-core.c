@@ -425,7 +425,7 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
           else
             dir = g_path_get_dirname (dir_or_file_path);
 
-          char *test_path = "main/hello/.";
+          char *test_path = "main/hello/test/again";
           g_autofree char *test2 = dirname (g_strdup (test_path));
           printf ("test2: %s\n", test2);
           g_autofree char *test = g_path_get_dirname (test_path);
