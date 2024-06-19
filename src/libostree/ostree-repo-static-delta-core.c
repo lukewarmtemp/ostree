@@ -418,6 +418,14 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
           // char ch = '.';
           // if (dir_or_file_path[strlen(dir_or_file_path) - 1] == G_DIR_SEPARATOR)
           //   strncat(dir_or_file_path, &ch, 1);
+
+          char *test_path = "main";
+          g_autofree char *test = g_path_get_dirname (test_path);
+          printf ("test: %s\n", test);
+          g_autofree char *test2 = dirname(test_path);
+          printf ("test2: %s\n", test2);
+
+
           printf ("HELLO\n");
           g_autofree char *dir = g_path_get_dirname (dir_or_file_path);
           basename = g_path_get_basename (dir_or_file_path);
