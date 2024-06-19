@@ -415,20 +415,21 @@ ostree_repo_static_delta_execute_offline_with_signature (OstreeRepo *self, GFile
       else
         {
           printf ("ENTER stage 1.2\n");
-          g_autofree char *dir = ""; 
-          if (dir_or_file_path[strlen(dir_or_file_path) - 1] == G_DIR_SEPARATOR)
-            g_autofree char *modifed_dir = g_strdup (dir_or_file_path);
-            modifed_dir[strlen(modifed_dir) - 1] = '\0';
-            dir = g_path_get_dirname (modifed_dir);
+          g_autofree char *dir = "";
+          if (dir_or_file_path[strlen (dir_or_file_path) - 1] == G_DIR_SEPARATOR)
+            {
+              g_autofree char *modifed_dir = g_strdup (dir_or_file_path);
+              modifed_dir[strlen (modifed_dir) - 1] = '\0';
+              dir = g_path_get_dirname (modifed_dir);
+            }
           else
             dir = g_path_get_dirname (dir_or_file_path);
 
           char *test_path = "main/hello";
           g_autofree char *test = g_path_get_dirname (test_path);
           printf ("test: %s\n", test);
-          g_autofree char *test2 = dirname(test_path);
+          g_autofree char *test2 = dirname (test_path);
           printf ("test2: %s\n", test2);
-
 
           printf ("HELLO\n");
           // g_autofree char *dir = g_path_get_dirname (dir_or_file_path);
